@@ -27,4 +27,19 @@ Por fim, basta invocar a função, como da seguinte maneira:
 (*sum_pointer)(1,2)	
 \end{verbatim}
 
+%exemplo em C#
+Em C\#, podemos referenciar métodos em forma de objetos através do uso de \emph{delegate} \cite{sebesta}\cite{delegate}, o que torna muito poderoso e flexível. Para fazer uso do mesmo, precisamos declarar um \emph{delegate} para um determinado protocolo de função, como:
+\begin{verbatim}
+public delegate int SumDelegate(int a, int b);
+\end{verbatim}
+
+Podemos instanciar um SumDelegate passando por parâmetro para seu construtor o nome de uma função cuja declaração tenha o mesmo protocolo. Suponha a função chamada \textit{sum} nesses moldes, podemos instanciar SumDelegate como segue:
+\begin{verbatim}
+SumDelegate sumDelegate= new SumDelegate(sum);
+\end{verbatim}
+
+Para executar o \textit{delegate} em questão, basta fazer como segue:
+\begin{verbatim}
+sumDelegate(2,3);
+\end{verbatim}
 % section chamar_subprogramas_indiretamente (end)
