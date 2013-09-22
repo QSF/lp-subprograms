@@ -1,0 +1,30 @@
+%!TEX root = ../artigo.tex
+\section{Chamar Subprogramas Indiretamente} % (fold)
+\label{sec:chamar_subprogramas_indiretamente}
+Há momentos, durante a programação de um software, em que se torna necessário chamar subprogramas de forma indireta. Isso ocorre quando o subprograma a ser chamado é somente conhecido em tempo de execução, como eventos disparados por bibliotecas de interface gráfica e funções de \textit{callback}.
+
+%exemplo em c/c++
+Em C e C++, podemos utilizar ponteiro para função para chamar um subprograma conhecido em tempo de execução. Para utilizar essa técnica, primeiro temos que declarar uma função, como por exemplo:
+\begin{verbatim}
+int sum(int a, int b)
+{
+	return a + b;
+}
+\end{verbatim}
+
+A seguir, temos que declarar um ponteiro com a mesma assinatura da função escolhida. Como no nosso exemplo (função \textit{sum}) a função possui dois parâmetros e um retorno do tipo \emph{int}, temos um ponteiro como mostrado:
+\begin{verbatim}
+int (*sum_pointer)(int, int);
+\end{verbatim}
+
+Em seguida, é necessário atribuir o ponteiro para a função em questão. Em nosso exemplo:
+\begin{verbatim}
+sum_pointer = &sum;
+\end{verbatim}
+
+Por fim, basta invocar a função, como da seguinte maneira:
+\begin{verbatim}
+(*sum_pointer)(1,2)	
+\end{verbatim}
+
+% section chamar_subprogramas_indiretamente (end)
