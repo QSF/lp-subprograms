@@ -1,0 +1,40 @@
+\documentclass[a4paper]{article}
+
+%deixa no padr?o brasileiro, traduzindo as se??es, possibilitando caracteres e hifen
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amsthm,array} 
+
+%estilo de header
+\pagestyle{headings}
+
+%pacote para inserir imagem
+\usepackage{graphicx}
+
+%t?tulo
+\title{Subprogramas}
+\author{Gustavo Scaloni Vendramini    \\ 
+        Guilherme José Henrique       \\
+        Sean Carlisto de Alvarenga    \\
+        Vinícius Fernandes de Jesus}
+\date{\today}
+
+%pacote que coloca links no table of contents e monta o índice lateral, de acordo com as se??es do documento.
+\usepackage[pdftex]{hyperref}
+
+%documento em s?
+\begin{document}
+\maketitle
+\pagebreak
+\maketitle
+\tableofcontents
+
+\include{./subprogramas_parametro/subprogramas_parametro}%seção 9.6
+\include{./subprogramas_runtime/subprogramas_runtime}%seção 9.7
+\include{./overload_subprogramas/overload_subprogramas}%seção 9.8
+\include{./generic_subprogramas/generic_subprogramas}%seção 9.9
+
+\bibliographystyle{plain} % especifica o estilo como as refer?ncias s?o formatadas
+\bibliography{artigo} % especifica o arquivo que cont?m todas as refer?ncias catalogadas, de acordo com a sintaxe de um arquivo .bib.
+\end{document}
