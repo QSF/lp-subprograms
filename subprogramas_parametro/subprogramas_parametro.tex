@@ -1,4 +1,41 @@
+%!TEX root = ../artigo.tex
+
 \section{Subprogramas Como Parâmetro} % (fold)
 \label{sec:subprogramas_como_parametro}
+Em muitas ocasiões temos a necessidade de passar um subprograma através de um parâmetro. A ideia é interessante e simples, mas gera duas complicações em termos de implementação.
 
+Primeiro, temos a complicação que consiste na maneira de realizar a checagem de tipo (\textit{type checking}, ~\ref{sub:type_check}) do subprograma passado por parâmetro. Em C e C++, onde a passagem de subprogramas é feita através de ponteiro para função, essa checagem é feita pelo tipo do ponteiro.
+
+A outra complicação ocorre em linguagens de programação que permitem subprogramas aninhados. O problema refere-se a qual ambiente de referência o subprograma passado por parâmetro terá. Nessa situação, há três tipos possíveis:
+\begin{description}
+	\item[Shallow Binding:] O ambiente é o local onde o subprograma é chamado.
+	\item[Deep Binding:] O ambiente refere-se onde o subprograma foi definido.
+	\item[Ad Hoc Binding:] O ambiente condiz com o local que o subprograma foi passado por parâmetro.
+\end{description}
+
+Como exemplo, considere a listagem ~\ref{scope_binding}, cuja sintax é de JavaScript. O subprograma \textit{sub2()} apenas imprime o valor da variável \textit{x}, porém, seu valor depende do ambiente de referência utilizado. 
+
+\begin{lstlisting}[caption=Código retirado de \cite{sebesta}]
+function sub1() {
+	var x;
+	function sub2() {
+		alert(x);
+	};
+	function sub3() {
+		var x;
+		x = 3;
+		sub4(sub2);
+	};
+	function sub4(subx) {
+		var x;
+		x = 4;
+		subx();
+	};
+	x = 1;
+	sub3();
+};
+\end{lstlisting}
+\label{scope_binding}
+
+Caso a listagem em questão utilize o ambiente de referência \textit{Shallow Binding}, o valor impresso seria 4. Caso o ambiente \textit{Deep Binding} fosse escolhido, o valor impresso seria 1. Já para \textit{Ad Hoc Binding}, o valor seria 3.
 % section subprogramas_como_parametro (end)
