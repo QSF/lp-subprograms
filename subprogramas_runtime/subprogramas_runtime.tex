@@ -4,11 +4,11 @@
 Há momentos, durante a programação de um software, em que se torna necessário chamar subprogramas de forma indireta. Isso ocorre quando o subprograma a ser chamado é somente conhecido em tempo de execução, como eventos disparados por bibliotecas de interface gráfica e funções de \textit{callback}.
 
 %exemplo em c/c++
-Em C e C++, podemos utilizar ponteiro para função para chamar um subprograma conhecido em tempo de execução. Para utilizar essa técnica, primeiro temos que declarar uma função, como por exemplo:
+Em C e C++, podemos utilizar ponteiro para função para chamar um subprograma conhecido em tempo de execução \cite{pointer,sebesta}. Para utilizar essa técnica, primeiro temos que declarar uma função, como por exemplo:
 \begin{verbatim}
 int sum(int a, int b)
 {
-	return a + b;
+    return a + b;
 }
 \end{verbatim}
 
@@ -28,7 +28,7 @@ Por fim, basta invocar a função, como da seguinte maneira:
 \end{verbatim}
 
 %exemplo em C#
-Em C\#, podemos referenciar métodos em forma de objetos através do uso de \emph{delegate} \cite{sebesta}\cite{delegate}, o que torna muito poderoso e flexível. Para fazer uso do mesmo, precisamos declarar um \emph{delegate} para um determinado protocolo de função, como:
+Em C\#, podemos referenciar métodos em forma de objetos através do uso de \emph{delegate} \cite{delegate,sebesta}, o que torna muito poderoso e flexível. Para fazer uso do mesmo, precisamos declarar um \emph{delegate} para um determinado protocolo de função, como:
 \begin{verbatim}
 public delegate int SumDelegate(int a, int b);
 \end{verbatim}
