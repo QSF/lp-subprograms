@@ -17,28 +17,28 @@ A seguir, temos que declarar um ponteiro com a mesma assinatura da função esco
 int (*sum_pointer)(int, int);
 \end{verbatim}
 
-Em seguida, é necessário atribuir o ponteiro para a função em questão. Em nosso exemplo:
+Em seguida, é necessário atribuir a função em questão para o ponteiro declarado. Em nosso exemplo:
 \begin{verbatim}
 sum_pointer = &sum;
 \end{verbatim}
 
 Por fim, basta invocar a função, como da seguinte maneira:
 \begin{verbatim}
-(*sum_pointer)(1,2)	
+(*sum_pointer)(1,2);	
 \end{verbatim}
 
 %exemplo em C#
-Em C\#, podemos referenciar métodos em forma de objetos através do uso de \emph{delegate} \cite{delegate,sebesta}, o que torna muito poderoso e flexível. Para fazer uso do mesmo, precisamos declarar um \emph{delegate} para um determinado protocolo de função, como:
+Em C\#, podemos referenciar métodos em forma de objetos, através do uso de \emph{delegate} \cite{delegate,sebesta}, o que torna muito poderoso e flexível. Para fazer uso do mesmo, precisamos declarar um \emph{delegate} para um determinado protocolo de função, como:
 \begin{verbatim}
 public delegate int SumDelegate(int a, int b);
 \end{verbatim}
 
-Podemos instanciar um SumDelegate passando por parâmetro para seu construtor o nome de uma função cuja declaração tenha o mesmo protocolo. Suponha a função chamada \textit{sum} nesses moldes, podemos instanciar SumDelegate como segue:
+Podemos instanciar um SumDelegate passando por parâmetro para seu construtor o nome de uma função cuja declaração tenha o mesmo protocolo. Suponha a existência da função chamada \textit{sum} que respeite essa assinatura, podemos então instanciar SumDelegate como segue:
 \begin{verbatim}
 SumDelegate sumDelegate= new SumDelegate(sum);
 \end{verbatim}
 
-Para executar o \textit{delegate} em questão, basta fazer como segue:
+Para executar o \textit{delegate} em questão, fazemos da seguinte forma:
 \begin{verbatim}
 sumDelegate(2,3);
 \end{verbatim}
