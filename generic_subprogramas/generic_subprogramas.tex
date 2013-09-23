@@ -10,8 +10,9 @@ Um subprograma polimórfico é algo que pode nos oferecer esse tipo de reuso. Se
 	\item[Paramétrico:] Baseia-se do uso de tipos genéricos, onde esse tipo genérico pode assumir qualquer tipo de dado. Esta seção irá abordar esse tipo de polimorfismo.
 \end{description}
 
-Subprogramas com polimorfismo paramétrico são subprogramas que utilizam tipos de dados genéricos, o que possibilita seu reuso para cada tipo de dado. A seguir, iremos exemplificar o uso dessa técnica em C++, Java, C\# e F\#.
+Subprogramas com polimorfismo paramétrico são subprogramas que utilizam tipos de dados genéricos, o que possibilita seu reuso para cada tipo de dado. A seguir, iremos exemplificar o uso dessa técnica em C++, Java e C\#.
 
+%-------------Templates em C++
 \subsection{Template em C++} % (fold)
 \label{sub:template_em_c}
 Em C++, funções genéricas são obtidas através do uso de \emph{templates} \cite{template_cpluplus}. Primeiro, é necessário declarar um template, fazendo-o da seguinte forma:
@@ -44,5 +45,33 @@ Para trocar o tipo dos parâmetros da função \emph{GetMax}, basta trocar o tip
 
 \emph{Templates} podem ser utilizado em classes, podem ser aninhados e também podem possuir especializações. Explicar essas funcionalidades não faz parte do escopo deste trabalho, mas isso pode ser obtido em \cite{template_cpluplus}.
 % subsection template_em_c (end)
+
+%-------------Métodos Genéricos em Java
+\subsection{Métodos Genéricos em Java} % (fold)
+\label{sub:metodos_genericos_em_java}
+Em Java, podemos fazer o uso de métodos genéricos, sendo similar aos \emph{templates} de C++. Um exemplo de um método genérico em Java é como segue
+\begin{verbatim}
+public static <T> T doIt(T[] list) {
+   ...
+}
+\end{verbatim}
+
+Onde é definido o método \emph{doIt} que recebe como parâmetro uma lista de tipos genéricos. O método \emph{doIt} pode ser chamado passando uma lista do tipo \emph{String} da seguinte forma
+\begin{verbatim}
+	doIt<String>(myList);
+\end{verbatim}
+
+Diferentemente de C++, os tipos genéricos em java devem ser uma classe, não podendo ser um valor absoluto ou um tipo primitivo. Além do mais, Java permite que limitamos os tipos genéricos, como informando de qual classe ele deve herdar ou qual interface deve implementar \cite{sebesta}.
+
+Tipos genéricos em Java nos fornece muitos outros recursos (como \emph{Wildcards}), que não abordados neste trabalho, mas que podem ser encontrados com detalhes em \cite{generics_java}.
+% subsection metodos_genericos_em_java (end)
+
+%-------------Métodos Genéricos em C#
+\subsection{Métodos Genéricos em C\#} % (fold)
+\label{sub:metodos_genericos_em_c_sharp}
+Métodos genéricos em C\# tem as mesmas funcionalidades de Java, porém não suportam \emph{wildcards}. Uma diferença em C\# é que o tipo do argumento pode ser omitido caso o compilador poder inferir o tipo \cite{sebesta}. 
+
+Mais informações e exemplos sobre tipos genéricos em C\# podem ser encontrados em \cite{generics_msdn}.
+% subsection metodos_genericos_em_c_sharp (end)
 
 % section subprogramas_genericos (end)
