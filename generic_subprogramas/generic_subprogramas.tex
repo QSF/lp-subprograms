@@ -1,0 +1,15 @@
+%!TEX root = ../artigo.tex
+\section{Subprogramas Genéricos} % (fold)
+\label{sec:subprogramas_genericos}
+No desenvolvimente de software, o reuso do código fonte é um fator importante para aumentar a produtividade e diminuir gastos. Uma maneira de conseguir esse reuso seria fazer um único subprograma funcionar para qualquer tipo de dados. Com isso, por exemplo, não precisamos criar um subprograma de ordenação para cada tipo de dado existente.
+
+Um subprograma polimórfico é algo que pode nos oferecer esse tipo de reuso. Segundo Sebesta \cite{sebesta}, há três tipos de polimorfismo, sendo eles:
+\begin{description}
+	\item[Ad Hoc:] Consiste na sobrecarga de subprogramas, conforme mostrado na seção \ref{sec:sobrecarga_de_subprogramas}.
+	\item[Subtipo:] Específico para linguagens orientadas a objeto, que não está dentro do escopo deste trabalho, mas pode ser encontrado em \cite{poli_java}.
+	\item[Paramétrico:] Baseia-se do uso de tipos genéricos, onde esse tipo genérico pode assumir qualquer tipo de dado. Esta seção irá abordar esse tipo de polimorfismo.
+\end{description}
+
+Subprogramas com polimorfismo paramétrico são subprogramas que utilizam tipos de dados genéricos, o que possibilita seu reuso para cada tipo de dado. A seguir, iremos exemplificar o uso dessa técnica em C++, Java, C\# e F\#.
+
+% section subprogramas_genericos (end)
