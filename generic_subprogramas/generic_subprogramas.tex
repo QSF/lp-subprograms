@@ -12,4 +12,37 @@ Um subprograma polimórfico é algo que pode nos oferecer esse tipo de reuso. Se
 
 Subprogramas com polimorfismo paramétrico são subprogramas que utilizam tipos de dados genéricos, o que possibilita seu reuso para cada tipo de dado. A seguir, iremos exemplificar o uso dessa técnica em C++, Java, C\# e F\#.
 
+\subsection{Template em C++} % (fold)
+\label{sub:template_em_c}
+Em C++, funções genéricas são obtidas através do uso de \emph{templates} \cite{template_cpluplus}. Primeiro, é necessário declarar um template, fazendo-o da seguinte forma:
+\begin{verbatim}
+template <template parameters>
+\end{verbatim}
+
+Um \emph{template parameter} pode ter uma das seguintes formas
+\begin{verbatim}
+class identifier
+typename identifier
+\end{verbatim}
+
+Segundo Sebesta \cite{sebesta}, a palavra chave \emph{class} é utilizada para especificar tipos e \emph{typename} é necessária para especificar um valor absoluto.
+
+Como exemplo, vamos declarar um função template, que retorna o maior valor entre dois dados. A declaração é feita da seguinte forma
+\begin{verbatim}
+template <class myType>
+myType GetMax (myType a, myType b) {
+   return (a>b?a:b);
+}
+\end{verbatim}
+
+Para chamarmos \emph{GetMax} para dois inteiros, fazemos da seguinte maneira
+\begin{verbatim}
+GetMax<int> (1,2);
+\end{verbatim}
+
+Para trocar o tipo dos parâmetros da função \emph{GetMax}, basta trocar o tipo de dados ao charmar a função em questão (por exemplo, de \emph{int} para \emph{float}).
+
+\emph{Templates} podem ser utilizado em classes, podem ser aninhados e também podem possuir especializações. Explicar essas funcionalidades não faz parte do escopo deste trabalho, mas isso pode ser obtido em \cite{template_cpluplus}.
+% subsection template_em_c (end)
+
 % section subprogramas_genericos (end)
