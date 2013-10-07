@@ -1,0 +1,109 @@
+%!TEX root = ../artigo.tex
+\section{Métodos de Passagem de Parâmetros} % (fold)
+\label{sec:metodos_passagem_parametros}
+A passagem de parâmetros é uma das formas do subprograma ter acesso aos dados que irá processar. 
+Os parâmetros podem ser utilizados para apresentar valores ao subprograma e recuperar seu valor após termino do subprograma. Existem dois tipos de parâmetros, os parâmetros no cabeçalho do subprograma são chamados parâmetros formais e os parâmetros apresentados numa chamada ao subprograma são chamados de parâmetros reais. 
+
+
+Exemplo de cabeçalho de subprograma.
+Exemplo de chamada a um subprograma.
+
+
+Três modelos semânticos de passagem de parâmetros são descritos na literatura: modo entrada (in mode), modo saída (out mode) e modo entrada/saída (inout mode). Estes modelos definem como os dados são transmitidos entre os parâmetros formais e reais. No modo entrada os parâmetros formais podem receber dados do parâmetro real, no modo saída eles podem transmitir dados para o parâmetro real e no modo entrada/saída podem fazer os dois. Estes três modelos básicos de transmissão de parâmetros são utilizados pelos projetistas de linguagem nas implementações dos métodos de passagem de parâmetros.
+
+\subsection{Passagem por valor}
+A passagem por valor é um modelo de implementação para parâmetros de modo entrada, onde o parâmetro formal recebe dados do parâmetro real. Nesse modo, o valor do parâmetro real é utilizado para inicializar o parâmetro formal que atua como uma variável local no subprograma.
+
+A transferência dos dados pode ser feita por cópia dos valores ou pela transmissão de um caminho de acesso (ponteiro ou referência) para o valor do parâmetro real. Na passagem por valor normalmente é utilizado a transferência por cópia, visto que para a transmissão do caminho de acesso seria necessário que o dado estivesse numa célula protegida contra escrita, o que não é uma tarefa simples.
+
+Exemplo: Imagine se o subprograma passe o parâmetro para outro subprograma.
+
+O método de passagem por valor é rápida na vinculação e no tempo de acesso. Se for utilizado transferência por cópia, tem como desvantagem a necessidade de espaço adicional para armazenamento e as operações de transferência podem ser custosas se o parâmetro for grande.
+
+
+\subsection{Passagem por resultado}
+A passagem por resultado segue modelo semântico de passagem de parâmetro modo saída. Neste método nenhum valor é transmitido na chamada do subprograma, o parâmetro formal funciona como variável local e antes que o controle retorne para o chamador, o valor do parâmetro formal é copiado para o parâmetro real.
+
+Assim como no método de passagem por valor, a passagem por resultado compartilha as desvantagens da necessidade de armazenamento e operações extras caso for retornado valores em vez do caminho de acesso. Porém devido a dificuldade de implementação da passagem por resultado transmitindo um caminho de acesso utilizamos a transferência por cópia, dificuldade esta de garantir que o valor inicial do parâmetro real não seja utilizado no subprograma chamado.
+
+Ainda como desvantagem existe o problema colisão de parâmetros reais. Suponha um subprograma com dois parâmetros formais diferentes, na chamada do subprograma atribuicao(a,a) qual será o valor retornado para a? Será retornado o valor que for atribuído por último ao parâmetro real a. Mas essa ordem depende da implementação. Exemplo de colisão de parâmetros reais em C\#:
+
+\begin{verbatim}
+void atribuicao(out int x, out int y) {
+    x = 29;
+    y = 15;
+}
+...
+f.atribuicao(out a, out a);
+\end{verbatim}
+
+Outro problema é na escolha do tempo para avaliar os endereços dos parâmetros reais (momento da chamada ou momento do retorno). 
+
+Por exemplo, no subprograma abaixo o resultado pode depender do tempo de avaliação do endereço. Como a variável index pode ser modificada pelo subprograma, o parâmetro formal x pode assumir valores distintos dependendo da ordem de avaliação caso houver uma chamada deste subprograma passando uma lista como parâmetro real.
+
+\begin{verbatim}
+void subprograma(out int x, int index) {
+    x = 23;
+    index = 5;
+}
+...
+sub = 21;
+f.subprograma(list[sub], sub);
+\end{verbatim}
+
+Se o endereço é avaliado na entrada do subprograma o valor 23 é atribuído a list[21], se for avaliado na saída o valor 23 é atribuído a list[5].
+
+
+\subsection{Passagem por valor-resultado}
+A passagem por valor-resultado é a implementação de parâmetro em modo entrada/saída onde é combinado a passagem por valor e a passagem por resultado. O valor do parâmetro real é usado para inicializar o parâmetro formal que atua como variável local. No termino do subprograma o valor do parâmetro formal é transmitido de volta para o parâmetro real. 
+
+A passagem por valor-resultado também é chamada de passagem por cópia (porque o parâmetro real é copiado para o parâmetro formal na chamada do subprograma e é copiado de volta para o parâmetro real no fim do subprograma) e partilha dos mesmos problemas da passagem por valor e passagem por resultado.
+
+\subsection{Passagem por referência}
+Mais um modelo de implementação de parâmetros em modo entrada/saída. O parâmetro real é compartilhado com o subprograma chamado pela transmissão de uma caminho de acesso.
+A passagem por referência traz como vantagem o custo de tempo e espaço, pois não é necessário espaço duplicado e nem operações de cópia. Como desvantagem o acesso ao parâmetro formal é mais lento do que a passagem por valor devido ao endereçamento indireto, ou seja, é preciso mais de um acesso para chegar ao valor da variável. Além disso, se for necessário uma comunicação unidirecional torna-se um problema, pois pode haver mudanças no parâmetro real.
+
+Presença de problemas como colisões de parâmetros reais e de apelido. A função em C++ abaixo ilustra o problema de apelido que é prejudicial para legibilidade e confiabilidade do código.
+
+\begin{verbatim}
+void função(int &first, int &second)
+...
+função(total, total)
+\end{verbatim}
+
+\subsection{Passagem por nome}
+A passagem por nome é mais um método de transmissão de parâmetros em modo entrada/saída. O parâmetro real é textualmente substituído pelo parâmetro formal em todas as suas ocorrências no subprograma. O parâmetro formal é vinculado a valores ou a endereços reais, mas a vinculação real é retardada até o momento que o parâmetro formal seja atribuído ou referenciado.
+
+Esse método é complexo de implementar e ineficiente, porém é usado em tempo de compilação para parâmetros genéricos de subprogramas genéricos em C++, Java 5.0 e C\# 2005.
+
+
+\subsection{Implementando métodos de passagem de parâmetros}
+A comunicação de parâmetros é realizada por uma pilha em tempo de execução que é gerenciada pelo sistema. 
+
+Na passagem de parâmetros por valor são copiados valores dos parâmetros reais para posições na pilha que serve como armazenamento para os parâmetros formais correspondentes. Já na passagem por resultado os valores que serão atribuídos ao parâmetro real fica na pilha até que possam ser recuperados pelo chamador após o término da chamada subprograma. Na passagem por valor-resultado uma posição na pilha é inicializada pela chamada e depois é usado como uma variável local no subprograma chamado. Na passagem por referência apenas é copiado o endereço do parâmetro para a pilha.
+
+Figura.
+
+\subsection{Métodos de passagem de parâmetros das principais linguagens}
+O C usa passagem por valor, porém obtêm a semântica da passagem por referência utilizando ponteiros (copiado do ALGOL 68). O valor do ponteiro como parâmetro é copiado para a função chamada e nada é retornado, entretanto a função chamada pode fazer alterações naquele dado uma vez que possui o caminho de acesso. A proteção contra escrita é feita implicitamente na função chamada. 
+
+O C++ utiliza também a passagem por valor e garante a passagem por referência com ponteiros, além de um tipo especial de ponteiro chamado tipo de referência que após sua inicialização não pode referenciar outra variável.
+
+Em Java os parâmetros também são passados por valor, porém como os objetos são apenas acessados por variáveis de referência os parâmetros são passados com a semântica de referência.
+Ada e Fortran 95+ permitem ao programador especificar o modo de cada parâmetro formal (entrada, saída e entrada-saída).
+
+O C\# utiliza a passagem por valor como padrão, mas também permite ao programador utilizar passagem por refreferência se o prefixo \textbf{\emph{ref}} for utilizado antes dos dois parâmetros (real e formal). Também suporta passagem de parâmetro em modo saída, passado por referência, com o modificador out antes do parâmetro formal.
+
+A passagem de parâmetro do PHP é semelhante à do C\#, excepto que tanto o parâmetro real quanto parâmetro formal pode ser passado por referência precedendo um ou ambos os parâmetros com uma comercial (\&).
+
+Em Python e Ruby é utilizado a passagem por atribuição, nesse sentido todos os valores de dados são objetos. Assim cada variável armazena uma referencia para o valor. Se uma variável referenciada é acrescida de uma unidade então é criado um novo objeto com o valor da variável mais 1 e a variável referencia o novo objeto. No caso de vetor passado como parâmetro se houver uma atribuição ao parâmetro formal que referencia o vetor então não tem efeito no chamador, porém se houve uma atribuição à um elemento do vetor passado então o correspondente parâmetro real será modificado.
+
+\subsection{Verificação de tipos}
+A verificação dos tipos dos parâmetros reais em relação aos seus correspondentes parâmetros formais faz-se necessária uma vez que erros causados por tipos de parâmetros diferentes podem levar a erros de programa difíceis de detectar. Desta forma em muitas linguagens é feita a verificação de tipos.
+
+Nas versões recentes do C e do C++ é feita verificação de tipos, onde os tipos dos parâmetros formais são incluídos na lista no cabeçalho da função. Não existe verificação de tipos de parâmetros em Python e Ruby porque estas linguagens são dinamicamente tipadas.
+
+
+% section metodos_passagem_parametros (end)
+
+
