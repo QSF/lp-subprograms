@@ -1,0 +1,38 @@
+\section{Sobrecarga de operadores definidos pelo usuário}
+\label{sec:sobrecarga_operadores_definidos_pelo_usuario}
+Linguagens como Ada, Python, Ruby e C++ suportam sobrecarga de operadores (\textit{Overloaded Operators}). Sobrecarga de operadores permite efetuar operações como soma, subtração, multiplicação e divisão em tipos de dados definidos pelo usuário. Considere a listagem \ref{lst:overload_c}, que realiza a sobrecarga do operador + para efetuar a soma de vetores. A saída do programa é 4, 3.
+
+\begin{lstlisting}[caption={Código retirado de \cite{overload_c}}, label={lst:overload_c}]
+#include <iostream>
+
+using namespace std;
+
+class CVector {
+  public:
+    int x,y;
+    CVector () {};
+    CVector (int,int);
+    CVector operator + (CVector);
+};
+
+CVector::CVector (int a, int b) {
+  x = a;
+  y = b;
+}
+
+CVector CVector::operator+ (CVector param) {
+  CVector temp;
+  temp.x = x + param.x;
+  temp.y = y + param.y;
+  return (temp);
+}
+
+int main () {
+  CVector a (3,1);
+  CVector b (1,2);
+  CVector c;
+  c = a + b;
+  cout << c.x << "," << c.y;
+  return 0;
+}
+\end{lstlisting}

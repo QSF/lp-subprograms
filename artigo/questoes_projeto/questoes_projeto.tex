@@ -1,0 +1,34 @@
+\section{Questões de projetos referente a funções} 
+\label{sec:questoes_de_projetos_referentes_a_funcoes}
+Algumas questões relevantes ao projeto em relação a funções precisam ser levados em conta. As próximas seções discutem sobre questões de efeitos colaterais, tipos de retorno e quantidade de valores de retorno.
+
+\subsection{Efeitos colaterais}
+\label{sub:efeitos_colaterais}
+Uma questão relevante ao projeto em relação a funções é se efeitos colaterais serão permitidos. Linguagens puramente funcionais como Haskell, não possuem variáveis e portanto suas funções não possuem efeitos colaterais. Já linguagens que permitem funções com parâmetros passados por valor ou por referência, possuem efeitos colaterias, como por exemplo \textit{aliasing} (\textit{alias}, apelido). Considere o exemplo a seguir.
+
+\begin{verbatim}
+int x = 3; 
+... // se int* y = &x;
+*y = 9;
+\end{verbatim}
+
+O compilador nada pode fazer para otimizar o código acima, uma vez que não é possível saber se y = \&x. Então, se o otimizador tentar aplicar, por exemplo, o constant propagation sabendo que x é 5, e y for um \textit{alias}, ponteiro para x, então a propagação será feita de forma errada. 
+
+\subsection{Tipos de Valores Retornados}
+\label{sub:tipos_de_valores_retornados}
+C permite qualquer tipo ser retornado por suas funções exceto vetores e funções. Ambos nesse caso podem ser manipulados por ponteiros. C++ é semelhante ao C mas também permite tipos definidos pelo usuário ou classes serem retornados. Fortran 77 e Pascal permitem apenas tipos não estruturados. Ada, Python, Ruby e Lua, retornam valores de qualquer tipo, exceto no caso do Ada, onde funções não são tipos, portanto não podem ser retornadas (mas ponteiros para funções sim). Em Java e C\#, qualquer tipo ou classe podem ser retornados por seus métodos, porém, como método não é um tipo, não pode ser retornado.
+
+\subsection{Quantidade de valores retornados}
+\label{sub:quantidade_de_valores_retornados}
+A maioria das linguagens atuais permitem apenas 1 valor de retorno. A linguagem Lua, permite o retorno de multiplos valores. Considere um exemplo de função na linguagem Lua que retorna 3 valores \cite{sebesta}. A ordem das variáveis que chamam a função, serão vinculadas na ordem dos valores retornados pela função. \\
+
+\noindent A chamada da função
+
+\begin{verbatim}
+a, b, c = fun() 
+\end{verbatim}
+Onde o retorno da função fun() é 
+\begin{verbatim}
+return 3, sum, index
+\end{verbatim}
+

@@ -1,0 +1,15 @@
+\section{Sobrecarga de operadores definidos pelo usuário}
+\label{sec:sobrecarga_operadores_definidos_pelo_usuario}
+
+Closure
+
+Closure é uma variável local em uma função que é mantida viva (não é desalocada) após o retorno dessa função. Apenas linguagens que permitem subprogramas aninhados é possivel usar closure. Linguagens como C# e JavaScript.
+
+function foo(x) {
+  var tmp = 3;
+  return function (y) {
+    alert(x + y + (++tmp));
+  }
+}
+var bar = foo(2); // bar é um closure.
+bar(10); // 16
