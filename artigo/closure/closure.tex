@@ -1,0 +1,18 @@
+\section{Closure}
+\label{sec:closure}
+Closure é uma variável local em uma função que é mantida viva (não é desalocada) após o retorno dessa função. Apenas linguagens que permitem subprogramas aninhados é possivel closure. Linguagens como C\# e JavaScript possuem closure. Considere a listagem \ref{lst:closure}, na linguagem JavaScript, que utiliza closure.
+
+\begin{lstlisting}[caption={Closure em JavaScript}, label={lst:closure}]
+function foo(x) {
+  var tmp = 3;
+  return function (y) {
+    alert(x + y + (++tmp));
+  }
+}
+
+var bar = foo(2);
+bar(10); 
+\end{lstlisting}
+
+\noindent
+No programa acima na linha 8, bar é um closure. A saída do programa exibe 16 como saída quando executado pela primeira vez, e vai incrementando em 1 a cada execução.

@@ -1,0 +1,17 @@
+\frametitle {Java - Generics}\begin {lstlisting}[language=Java]
+//declarar um metodo generico.
+public static <T> T doIt(T[] list) {
+...
+}
+...
+//chamar o metodo para String
+doIt<String>(myList);
+
+...
+//chamar o metodo para Integer
+doIt<Integer>(myList);
+
+...
+//isso causaria um erro (tipo primitivo)
+doIt<int>(myList);
+\end{lstlisting}
