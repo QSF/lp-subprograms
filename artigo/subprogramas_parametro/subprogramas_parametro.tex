@@ -4,7 +4,7 @@
 \label{sec:subprogramas_como_parametro}
 Em muitas ocasiões temos a necessidade de passar um subprograma através de um parâmetro. A ideia é interessante e simples, mas gera duas complicações em termos de implementação.
 
-Primeiro, temos a complicação que consiste na maneira de realizar a checagem de tipo (\textit{type checking}, ~\ref{ub:verificacao_de_tipos}) do subprograma passado por parâmetro. Em C e C++, onde a passagem de subprogramas é feita através de ponteiro para função, essa checagem é feita pelo tipo do ponteiro.
+Primeiro, temos a complicação que consiste na maneira de realizar a checagem de tipo (\textit{type checking}, ~\ref{sub:verificacao_de_tipos}) do subprograma passado por parâmetro. Em C e C++, onde a passagem de subprogramas é feita através de ponteiro para função, essa checagem é feita pelo tipo do ponteiro.
 
 A outra complicação ocorre em linguagens de programação que permitem subprogramas aninhados. O problema refere-se a qual ambiente de referência o subprograma passado por parâmetro terá. Nessa situação, há três tipos possíveis:
 \begin{description}
