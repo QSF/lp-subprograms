@@ -99,6 +99,7 @@ A passagem de parâmetro do PHP é semelhante à do C\#, excepto que tanto o par
 Em Python e Ruby é utilizado a passagem por atribuição, nesse sentido todos os valores de dados são objetos. Assim cada variável armazena uma referencia para o valor. Se uma variável referenciada é acrescida de uma unidade então é criado um novo objeto com o valor da variável mais 1 e a variável referencia o novo objeto. No caso de vetor passado como parâmetro se houver uma atribuição ao parâmetro formal que referencia o vetor então não tem efeito no chamador, porém se houve uma atribuição à um elemento do vetor passado então o correspondente parâmetro real será modificado.
 
 \subsection{Verificação de tipos}
+\label{sub:verificacao_de_tipos}
 A verificação dos tipos dos parâmetros reais em relação aos seus correspondentes parâmetros formais faz-se necessária uma vez que erros causados por tipos de parâmetros diferentes podem levar a erros de programa difíceis de detectar. Desta forma em muitas linguagens é feita a verificação de tipos.
 
 Nas versões recentes do C e do C++ é feita verificação de tipos, onde os tipos dos parâmetros formais são incluídos na lista no cabeçalho da função. Não existe verificação de tipos de parâmetros em Python e Ruby porque estas linguagens são dinamicamente tipadas.
