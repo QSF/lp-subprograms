@@ -1,0 +1,144 @@
+%!TEX root = ../artigo.tex
+\section{Fundamentos de Subprogramas} % (fold)
+\label{sec:fundamentos_de_subprogramas}
+Todos os subprogramas têm características em comum.
+Dentre elas \cite{sebesta}:
+
+\begin{itemize}
+	\item Cada subprograma tem um único ponto de entrada.
+	\item O programa de chamada é suspenso durante a execução do
+	 subprograma chamado. O que significa que há apenas um subprograma em execução
+	 em um dado momento.
+	\item O controle sempre retorna para a estrutura que chamou quando a execução do subprograma termina.
+\end{itemize}
+
+\subsubsection{Definições Básicas} % (fold)
+\label{ssub:definicoes_basicas}
+
+Uma definição de subprograma descreve a interface e as ações da abstração do subprograma.
+Uma chamada de subprograma é a requisição explícita para um subprograma específico 
+ser executado. Um subprograma está ativo se, depois de chamado, ainda não completou tal execução \cite{sebesta}.
+
+Um cabeçalho de subprograma fornece um nome para o subprograma e especifica uma lista de parâmetros.
+Os cabeçalhos de Python e Ruby começam com \emph{def}.
+
+\begin{verbatim}
+def funcao (parametros)
+\end{verbatim}
+
+Em C, um cabeçalho de subprograma é declarado como:
+
+\begin{verbatim}
+void funcao (parametros)
+\end{verbatim}
+
+Os corpos dos subprogramas definem suas ações. Nas linguagens baseadas em C, por exemplo Java e Javascript,
+esse corpo é delimitado por colchetes. Em Ruby, para tal propósito, é utilizada a declaração \emph{end}.
+Já, em Python, a identação determina o corpo do subprograma e o primeiro comando
+não identado define o fim do subprograma.
+
+Ruby tem uma diferença peculiar em seu mecanismo de subprogramas.
+Funções em Ruby, fora de definições de classes,
+são emuladas como métodos do objeto raiz, o \emph{Object}.
+Se um método for chamado sem um receptor, \emph{self} é adotado,
+o que resulta na chamada de método do \emph{Object} \cite{thomas2004programming}.
+
+\subsubsection{Parâmetros} % (fold)
+\label{ssub:parametros}
+Há duas maneiras de um subprograma que não é método 
+ter acesso a um determinado dado que exige processamento.
+Através de acesso direto a váriaveis que foram declaradas fora do escopo do subprograma e acessível a ele
+ou pela passagem de dados por parâmetros.
+Dados passados através de parâmetros são acessados por nomes que são locais ao subprograma.
+
+Linguagens puramente funcionais, como em Haskell, não permitem dados mutáveis. 
+Logo, funções nessas linguagens simplesmente realizam alguns cálculos e retornam 
+algum valor como resultado.
+
+Os parâmetros nos cabeçalhos dos subprogramas são chamados de
+parâmetros formais ou, simplesmente, parâmetros. Eles são populados apenas quando o subprograma é chamado
+e essa ligação ocorre com alguma outra váriavel.
+
+Declarações de chamadas de subprograma têm que incluir o nome do subprograma e
+uma lista de parâmetros que são conectadas aos parâmetros formais.
+Esses parâmetros são chamados de parâmetros reais ou argumentos.
+
+Em quase todas as linguagens de programação, a ligação entre os parâmetros reais
+e os parâmetros formais acontece através da posição. Tais parâmetros são chamados de parâmetros posicionais.
+Uma solução para lista de parâmetros muito longas, são os chamados parâmetros por palavras-chave,
+em que o nome dos parâmetros formais são inseridos explicitamente na chamada de seu suprograma \cite{sebesta}.
+Por exemplo, uma chamada de método poderia ser:
+
+\begin{verbatim}
+sumer( lenght = my_lenght, list = my_list, sum = my_sum)
+\end{verbatim}
+
+A desvantagem dessa abordagem é do usuário precisar saber os nomes dos parâmetros formais.
+
+Já, em Python, Ruby, C++, Fortran 95, Ada e PHP, parâmetros formais 
+podem ter valores padrão. Um valor padrão é usado se nenhum parâmetro real for 
+passado para o parâmetro formal no cabeçalho do subprograma.
+Considere o seguinte cabeçalho:
+
+\begin{verbatim}
+def compute_pay(income = 1)
+\end{verbatim}
+
+Na chamada desse subprograma, pode-se omitir a chamada do parâmetro real \emph{income}.
+Por exemplo:
+
+\begin{verbatim}
+pay = compute_pay()
+\end{verbatim}
+
+Em C++, não se suporta os parâmetros por palavras-chave, então, 
+todos os parâmetros padrão devem estar na última posição do subprograma.
+
+C\# e Java aceitam métodos com um número variável de parâmetros,
+desde que eles sejam do mesmo tipo.
+Por exemplo, em C\#, isso se dá com o modificador \emph{params}.
+
+\begin{lstlisting}[caption=Código retirado de \cite{sebesta}]
+	public void DisplayList(params int[] list) {
+		foreach (int next in list) {
+			Console.WriteLine("Next value {0}", next);
+		}
+	}
+
+\end{lstlisting}
+\label{scope_binding}
+
+Ruby suporta um mecanismo altamente flexível de passagem de métodos reais.
+Pode-se ter passagem demétodos por uma lista de pares chave-valor 
+e uma lista com o asterico inicial a denotando, que é chamado de 
+parâmetro formal de \emph{array}. Além disso,
+devido a sua dinamicidade,
+nao há obrigação dos parâmetros passados pelo hash serem do mesmo tipo.
+
+
+\begin{lstlisting}[caption=Código retirado de \cite{caelum}]
+	class Conta
+  		def transfere(valor, argumentos)
+    		destino = argumentos[:para]
+    		data = argumentos[:em]
+
+    		executa a transferencia
+  		end
+	end
+\end{lstlisting}
+\label{scope_binding}
+
+\subsubsection{Procedimentos e Funções} % (fold)
+\label{ssub:procedimentos_e_fun_es}
+
+Há duas categorias distintas de subprogramas – procedimentos e funções.
+Funções retornam valores a partir de uma determinada computação e 
+os procedimentos não. 
+Em grande parte das linguagens, os procedimentos são emulados por funções que não retornam valor.
+
+Funções se assemelham a procedimentos, porém seu conceito inicial foi modelado a partir de funções matemáticas.
+Se um função for um modelo fiel, ela não produz nenhum efeito colateral,
+isto é, não modifica nenhum valor do parâmetro nem de variáveis fora dela.
+Entretanto, na prática, as funções têm efeitos colaterais \cite{sebesta}.
+
+
