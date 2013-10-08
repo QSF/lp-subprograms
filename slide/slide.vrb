@@ -1,0 +1,9 @@
+\frametitle {C\# - Delegate}\begin {lstlisting}[language=csh]
+//declarar um delegate
+public delegate int SumDelegate(int a, int b);
+...
+//instanciar um delegate (funcao sum tem a mesma assinatura)
+SumDelegate sumDelegate = new SumDelegate(sum);
+//executar
+sumDelegate(2,3);
+\end{lstlisting}
