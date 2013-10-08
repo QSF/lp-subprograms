@@ -1,9 +1,17 @@
-\frametitle {C\# - Delegate}\begin {lstlisting}[language=csh]
-//declarar um delegate
-public delegate int SumDelegate(int a, int b);
+\frametitle {Java - Generics}\begin {lstlisting}[language=Java]
+//declarar um metodo generico.
+public static <T> T doIt(T[] list) {
 ...
-//instanciar um delegate (funcao sum tem a mesma assinatura)
-SumDelegate sumDelegate = new SumDelegate(sum);
-//executar
-sumDelegate(2,3);
+}
+...
+//chamar o metodo para String
+doIt<String>(myList);
+
+...
+//chamar o metodo para Integer
+doIt<Integer>(myList);
+
+...
+//isso causaria um erro (tipo primitivo)
+doIt<int>(myList);
 \end{lstlisting}
