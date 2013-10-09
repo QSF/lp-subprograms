@@ -4,19 +4,29 @@
 A passagem de parâmetros é uma das formas do subprograma ter acesso aos dados que irá processar. 
 Os parâmetros podem ser utilizados para apresentar valores ao subprograma e recuperar seu valor após termino do subprograma. Existem dois tipos de parâmetros, os parâmetros no cabeçalho do subprograma são chamados parâmetros formais e os parâmetros apresentados numa chamada ao subprograma são chamados de parâmetros reais. 
 
+Exemplo em C++  do subprograma soma que imprime na tela a soma de dois números, onde a e b são os parâmetros formais e x e y são os parâmetros reais:
+\begin{verbatim}
+void soma(int a, int b) {
+    cout << "Soma = " << a+b; 
+}
 
-Exemplo de cabeçalho de subprograma.
-Exemplo de chamada a um subprograma.
+int main() {
+    int x = 2;
+    int y = 5;
+    
+    soma(x, y);
+   
+    return 0;
+}
+\end{verbatim}
 
+Três modelos semânticos de passagem de parâmetros são descritos na literatura: modo entrada (in mode), modo saída (out mode) e modo entrada/saída (inout mode). Estes modelos definem como os dados são transmitidos entre os parâmetros formais e reais. No modo entrada os parâmetros formais podem receber dados do parâmetro real, no modo saída eles podem transmitir dados para o parâmetro real e no modo entrada/saída podem fazer os dois. Estes três modelos básicos de transmissão de parâmetros são utilizados pelos projetistas de linguagem nas implementações dos métodos de passagem de parâmetros. \footnote[1]{Esta seção e os exemplos foram baseados no livro do Sebesta \cite{sebesta}}
 
-Três modelos semânticos de passagem de parâmetros são descritos na literatura: modo entrada (in mode), modo saída (out mode) e modo entrada/saída (inout mode). Estes modelos definem como os dados são transmitidos entre os parâmetros formais e reais. No modo entrada os parâmetros formais podem receber dados do parâmetro real, no modo saída eles podem transmitir dados para o parâmetro real e no modo entrada/saída podem fazer os dois. Estes três modelos básicos de transmissão de parâmetros são utilizados pelos projetistas de linguagem nas implementações dos métodos de passagem de parâmetros.
 
 \subsection{Passagem por valor}
 A passagem por valor é um modelo de implementação para parâmetros de modo entrada, onde o parâmetro formal recebe dados do parâmetro real. Nesse modo, o valor do parâmetro real é utilizado para inicializar o parâmetro formal que atua como uma variável local no subprograma.
 
-A transferência dos dados pode ser feita por cópia dos valores ou pela transmissão de um caminho de acesso (ponteiro ou referência) para o valor do parâmetro real. Na passagem por valor normalmente é utilizado a transferência por cópia, visto que para a transmissão do caminho de acesso seria necessário que o dado estivesse numa célula protegida contra escrita, o que não é uma tarefa simples.
-
-Exemplo: Imagine se o subprograma passe o parâmetro para outro subprograma.
+A transferência dos dados pode ser feita por cópia dos valores ou pela transmissão de um caminho de acesso (ponteiro ou referência) para o valor do parâmetro real. Na passagem por valor normalmente é utilizado a transferência por cópia, visto que para a transmissão do caminho de acesso seria necessário que o dado estivesse numa célula protegida contra escrita, o que não é uma tarefa simples, por exemplo, imagine se o subprograma passasse o parâmetro para outro subprograma.
 
 O método de passagem por valor é rápida na vinculação e no tempo de acesso. Se for utilizado transferência por cópia, tem como desvantagem a necessidade de espaço adicional para armazenamento e as operações de transferência podem ser custosas se o parâmetro for grande.
 
@@ -104,6 +114,83 @@ A verificação dos tipos dos parâmetros reais em relação aos seus correspond
 
 Nas versões recentes do C e do C++ é feita verificação de tipos, onde os tipos dos parâmetros formais são incluídos na lista no cabeçalho da função. Não existe verificação de tipos de parâmetros em Python e Ruby porque estas linguagens são dinamicamente tipadas.
 
+\subsection{Matrizes multidimencionais como parâmetro} % (fold)
+\label{sub:matrizes_multidimencionais_como_par_metro}
+Em algumas linguagens quando uma matriz é passado como parâmetro o compilador deve ser capaz de construir uma função de mapeamento enquanto vê apenas a declaração do subprograma - uma função de mapeamento simples mapeia valores inteiros (índices de elementos na matriz) para os endereços dos elementos da matriz. Isso é problema porque o compilador não pode prever quais serão os valores passados como parâmetro para construir a função de mapeamento, uma vez que os subprogramas podem ser compilados separadamente de quem os chama como em C e C++. Uma forma de contornar isso é passando matrizes como ponteiro e suas respectivas dimensões como parâmetro ou fixar o número de colunas na declaração da função. O exemplo a seguir mostra a passagem de uma matriz como parâmetro em C:
+
+\begin{verbatim}
+void procedure(int myarray[][3]) {
+    ...
+}
+void main() {
+    int mat[2][3];
+    ...
+    procedure(mat);
+    ...
+}
+\end{verbatim}
+
+Com o número de colunas da matriz fixo o compilador consegue dar os saltos nas posições de memória e encontrar corretamente os endereços dos elementos - o código para encontrar os endereços dos elementos a partir de uma array multidimencional é descrito no livro do Sebesta.
+
+O número fixo de colunas força o programador a escrever outro subprograma somente para passar uma matriz com o número de colunas diferente. Em contrapartida ele pode utilizar ponteiros deixando o código dinâmico como segue:
+
+\begin{verbatim}
+void procedure(int *mat, int rows, int cols) {
+    ...
+}
+void main() {
+    int mat[2][3];
+    ...
+    procedure(&mat, 2, 3); //ou procedure(mat[0][0], 2, 3);
+    ...
+}
+\end{verbatim}
+
+Ada permite não tem problemas com a passagem de matrizes multidimencionais como parâmetro porque as dimensões das matrizes são determinadas na compilação, uma vez que o parâmetro formal da matriz é restringida dentro dos limites da variável real. Exemplo de passagem de uma matriz em Ada:
+
+\begin{verbatim}
+type Mat_Type is array (Integer range <>, Integer range <>) of Float;
+
+Mat_1 : Mat_Type(1..5, 1..30);
+
+function Sumer(Mat : in Mat_Type) return Float is
+    ...
+end Sumer;
+\end{verbatim}
+
+No Fortran o problema é similar ao C e C++, então os parâmetros que são matrizes multidimencionais devem ter uma declaração após o cabeçalho do subprograma, como segue:
+
+\begin{verbatim}
+Subroutine Sub(Matrix, Rows, Cols, Result)
+    Integer, Intent(In) :: Rows, Cols
+    Real, Dimension(Rows, Cols), Intent(In) :: Matrix
+    Real, Intent(In) :: Result
+    ...
+End Subroutine Sub
+\end{verbatim}
+
+Em Java e C\# as matrizes multidimencionais são objetos que possuem o atributo length (tamanho do array), assim a passagem de matriz é similar ao Ada. Exemplo de passagem de array em Java:
+
+\begin{verbatim}
+float sumer(float mat[][]) {
+    float sum = 0.0f;
+    for (int row = 0; row < mat.length; row++) {
+        for (int col = 0; col < mat[row].length; col++) {
+            sum += mat[row][col];
+        } //** for (int row . . .
+    } //** for (int col . . .
+    return sum;
+}
+\end{verbatim}
+% subsection matrizes_multidimencionais_como_par_metro (end)
+
+\subsection{Considerações de projeto} % (fold)
+\label{sub:consideracoes_de_projeto}
+A escolha dos métodos de passagem de parâmetros deve considerar se a transferência dos dados é unidirecional ou bidirecional. Princípios de engenharia de software ditam que o acesso ao dados fora do subprograma devem ser minimizados. Com isso a passagem em modo entrada deve ser usada se nenhum dado for retornado ao chamador, parâmetros em modo saída quando é necessário retornar dados e o modo entrada-saída somente quando a trânsferencia de dados for bidirecional.
+
+Ainda há uma consideração quanto ao tamanho dos dados, por exemplo, se forem passados grandes matrizes como parâmetro justifica-se passar o caminho de acesso por referência, a fim de minimizar os custos de espaço e tempo.
+
+% subsection considera_es_de_projeto (end)
 
 % section metodos_passagem_parametros (end)
 

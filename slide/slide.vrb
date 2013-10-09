@@ -1,17 +1,6 @@
-\frametitle {Java - Generics}\begin {lstlisting}[language=Java]
-//declarar um metodo generico.
-public static <T> T doIt(T[] list) {
-...
-}
-...
-//chamar o metodo para String
-doIt<String>(myList);
-
-...
-//chamar o metodo para Integer
-doIt<Integer>(myList);
-
-...
-//isso causaria um erro (tipo primitivo)
-doIt<int>(myList);
-\end{lstlisting}
+\frametitle {Co-rotinas}Co-rotinas são um tipo especial de subprogramas. A linguagem Lua é uma das linguagens que possui co-rotinas. Geralmente, corrotinas são criadas pela aplicação por uma unidade chamada de unidade mestre.
+\begin{figure}[ht!]
+ \centering
+ \includegraphics[scale=0.5]{./imgs/coroutines.png}
+\label{co-rotinas}
+\end{figure}
