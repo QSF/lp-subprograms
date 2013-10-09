@@ -1,0 +1,148 @@
+%!TEX root = slide.tex
+
+\section{Fundamentos} % (fold)
+\label{sec:introducao}
+
+\begin{frame}{Introdução}
+	\begin{itemize}
+	  \item Conceito muito importante nas linguagens de programação.
+	  \item Máquina análitica de Babbage
+	  \item Reuso, economia de tempo e abstração.
+	  \item Métodos nas linguagens orientadas a objeto também são subprogramas
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Características comuns}
+	\begin{itemize}
+		\item Cada subprograma tem um único ponto de entrada.
+		\item Há apenas um subprograma em execução em um dado momento.
+		\item O controle sempre retorna para a estrutura que chamou quando a execução do subprograma termina.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Cabeçalho de subprograma}
+
+	Fornece um nome para o subprograma e especifica uma lista de parâmetros.
+
+	\begin{itemize}
+		\item Ruby e Python
+		\begin{verbatim}
+			def funcao (parametros)
+		\end{verbatim}
+
+		\item C-based
+		\begin{verbatim}
+			void funcao (parametros)
+		\end{verbatim}
+
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Corpo dos subprogramas}
+
+	Os corpos dos subprogramas definem as computações.
+
+	\begin{itemize}
+		\item \emph{C-based.} Delimitadas por chaves \{ \}
+		\item \emph{Python.} Identação
+		\item \emph{Ruby.} Palavra-chave \textbf{end}
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Peculiaridade de Ruby}
+    
+	\begin{lstlisting}[language=ruby]
+class Exemplo
+  def invocar_subprograma
+    puts self.method(:invocar_subprograma).owner #Exemplo
+    subprograma
+  end
+end
+
+def subprograma
+  puts self.method(:subprograma).owner # Object
+end
+
+exemplo = Exemplo.new
+exemplo.invocar_subprograma
+	\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}{Parâmetros}
+	
+	\begin{itemize}
+		\item Parâmetros Reais (Argumentos)
+		\item Parâmetros Formais (Parâmetros)
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Exemplos de parâmetros por palavras-chave}
+	
+	\begin{itemize}
+
+		\item Parâmetros Formais (Parâmetros)
+		\begin{verbatim}
+			funcao(20, 10)
+		\end{verbatim}
+
+		\item Parâmetros Reais (Argumentos)
+		\begin{verbatim}
+			void funcao(int param1, int param2)
+		\end{verbatim}
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Exemplos de parâmetros por palavras-chave}
+
+ Ada, Fortran 95+ e Python     
+	\begin{lstlisting}[language=python]
+def subprograma(param1, param2, param3):
+  print param1 # 30
+  print param2 # 20
+  print param3 # 10
+
+subprograma(param3 = 10, param2 = 20, param1 = 30)
+
+	\end{lstlisting}
+Desvantagem: Cliente precisa saber o nome dos parâmetros
+\end{frame}
+
+\begin{frame}[fragile]{Exemplos de parâmetros com valores padrão}
+
+Python, Ruby, C++, Fortran 95+, Ada e PHP
+
+	\begin{lstlisting}[language=python]
+def subprograma(param1, param2 = 20, param3 = 30):
+  print param1 # 10
+  print param2 # 20
+  print param3 # 30
+
+subprograma(10)
+
+	\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Passagem de hash e listas como parâmetros}
+
+
+	\begin{lstlisting}[language=ruby]
+class Conta
+  def transfere(argumentos, *valores)
+    destino = argumentos[:para]
+    data = argumentos[:em]
+
+  end
+end
+
+conta = Conta.new
+conta.transfere({:para => :escola, :em => Time.now}, [20.0, 30.0])
+
+
+	\end{lstlisting}
+
+\end{frame}
